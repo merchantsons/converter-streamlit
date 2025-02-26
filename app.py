@@ -24,7 +24,7 @@ def main():
         with col2:
             st.markdown("<h1 style='font-size: 1.8rem; margin-bottom: 0px; color: #000;'>GOOGLE LIKE UNIT CONVERTER</h1>", unsafe_allow_html=True)
             st.markdown("<p style='text-decoration: underline; font-size: .7rem; font-weight: 800; margin-top: -20px; color: #000;'>DESIGN & DEVELOPED BY MERCHANTSONS -  ( GIAIC - Monday 2pm to 5pm ROLL # 00037391 )</p>", unsafe_allow_html=True)
-            st.markdown("<p style='font-size: .8rem; font-weight: 800; margin-top: -20px; color: #000;'>Assignment Date :  February 26th 2025</p><", unsafe_allow_html=True)
+            st.markdown("<p style='font-size: .8rem; font-weight: 800; margin-top: -20px; color: #000;'>Assignment Date :  February 26th 2025</p>", unsafe_allow_html=True)
             st.markdown("<h1 style='font-size: 20px; color: rgba(255, 255, 255, 0.85); margin-top: 0px;'>Convert between units with precision and ease</h1>", unsafe_allow_html=True)
             st.markdown("<p style='font-size: 13px; color: #000; margin-top: -20px;'>14 conversion categories covering all common unit types</p>", unsafe_allow_html=True)
         
@@ -237,6 +237,59 @@ def main():
                                       key="convert_button", 
                                       type="primary",
                                       use_container_width=True)
+        
+        # Perform conversion when button is clicked
+        if convert_button:
+            try:
+                # Calculate conversion result
+                result = convert_units(from_value, from_unit, to_unit, selected_category, conversion_units)
+                
+                # Create a stylish result card
+                st.markdown("""
+                <div style="background-color: rgba(255, 255, 255, 0.15); 
+                            backdrop-filter: blur(10px); 
+                            padding: 20px; 
+                            border-radius: 10px; 
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+                            border: 1px solid rgba(255, 255, 255, 0.2); 
+                            margin-top: 20px;
+                            text-align: center;">
+                """, unsafe_allow_html=True)
+                
+                # Display the result
+                st.markdown(f"""
+                <p style="color: white; font-size: 16px; margin-bottom: 5px;">Result:</p>
+                <h2 style="color: white; font-weight: 600; margin-top: 0;">{from_value} {from_unit}</h2>
+                <p style="color: white; font-size: 20px; margin: 10px 0;">equals</p>
+                <h1 style="color: white; font-weight: 700; font-size: 28px;">{result:.8g} {to_unit}</h1>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Add random fact based on category (optional fun feature)
+                fun_facts = {
+                    "Length": [
+                        "Did you know? A light-year is about 9.5 trillion kilometers!",
+                        "Fun fact: The average human height is about 1.7 meters.",
+                    ],
+                    "Weight/Mass": [
+                        "Did you know? A teaspoon of a neutron star would weigh about 6 billion tons!",
+                        "Fun fact: The average weight of an adult brain is about 1.4 kilograms.",
+                    ],
+                    "Temperature": [
+                        "Did you know? The highest recorded temperature on Earth was 56.7°C in Death Valley, USA.",
+                        "Fun fact: The average body temperature of a healthy human is about 37°C.",
+                    ]
+                }
+                
+                if selected_category in fun_facts:
+                    st.markdown(f"""
+                    <div style="text-align: center; margin-top: 20px; font-style: italic; color: rgba(255, 255, 255, 0.7);">
+                    {random.choice(fun_facts[selected_category])}
+                    </div>
+                    """, unsafe_allow_html=True)
+            
+            except Exception as e:
+                st.error(f"Error performing conversion: {e}")
         
         # Close the card container
         st.markdown("</div>", unsafe_allow_html=True)
